@@ -1,6 +1,7 @@
 package com.koreait.dbms_study.controller;
 
 import com.koreait.dbms_study.dto.AddUserReqDto;
+import com.koreait.dbms_study.dto.EditUserReqDto;
 import com.koreait.dbms_study.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,4 +32,22 @@ public class UserController {
     public ResponseEntity<?> getUserByUserId(@RequestParam Integer userId){
         return ResponseEntity.ok(userService.getUserByUserId(userId));
     }
+
+    //요청 메소드 중 DELETE, PUT이 있는데 POST로
+    //보안상 이유, 호환성 이유
+    //일부 브라우저, 서버가 PUT, DELETE를 완벽히 지원하지 않음
+    //HTML <form>가 GET, POST만 지원
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editUser(@RequestBody EditUserReqDto editUserReqDto){
+        return ResponseEntity.ok(userService.editUser(editUserReqDto));
+    }
+
+    @PostMapping("/remove")
+    public ResponseEntity<?> removeUser(@RequestParam Integer userId){
+        return ResponseEntity.ok(userService.removeUser(userId));
+    }
+
 }
+//서비스로 넘김, edit을 하기전에 서비스에서 getUserById를 통해 존재하는지 확인, optional로 유저안에 있는지 없는지 확인
+//흐름 - 요청 -> 컨트롤러 ->(dto)-> 서비스 -> (dto - entity)-> 레포지토리 -> mapper-> mapper.xml -> SQL 실행 (사이사이에 entity와 dto 왔다갔다)
