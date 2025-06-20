@@ -6,6 +6,36 @@
     <insert id="insertPost">
         insert into
             post_tb
-        values (0, #{title}, #{content}, , now(), now());
+        values (0, #{title}, #{content}, #{userId}, now(), null);
     </insert>
+    <select id="getPostByPostId">
+        select
+            *
+        from
+            post_tb
+        where
+            post_id = #{post_id}
+    </select>
+    <select id="getPostList">
+        select
+            *
+        from
+            post_tb
+    </select>
+    <update id="editPost">
+        update
+            post_tb
+        set
+            title = #{title},
+            content = #{content},
+            update_dt = now()
+        where
+            post_id = #{postId}
+    </update>
+    <delete id="removePost">
+        delete from
+            post_tb
+        where
+            post_id = #{postId}
+    </delete>
 </mapper>

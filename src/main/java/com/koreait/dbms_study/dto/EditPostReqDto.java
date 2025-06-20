@@ -6,16 +6,16 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddPostReqDto {
+public class EditPostReqDto {
+    private Integer postId;
     private String title;
     private String content;
-    private Integer userId;
 
     public Post toEntity(){
         return Post.builder()
+                .postId(this.postId)
                 .title(this.title)
                 .content(this.content)
-                .userId(this.userId)
                 .build();
     }
 }
